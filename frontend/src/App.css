@@ -1,0 +1,86 @@
+.App {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .header h1 {
+    color: var(--primary-color);
+  }
+  
+  .container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn:hover {
+    background-color: #1565c0;
+  }
+  
+  .btn:disabled {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .input-group input,
+  .input-group textarea,
+  .input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .alert {
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  .alert-danger {
+    background-color: #ffebee;
+    color: var(--danger-color);
+    border: 1px solid #ffcdd2;
+  }
+  
+  .alert-success {
+    background-color: #e8f5e9;
+    color: var(--success-color);
+    border: 1px solid #c8e6c9;
+  }
+  
+  .alert-warning {
+    background-color: #fff8e1;
+    color: var(--warning-color);
+    border: 1px solid #ffecb3;
+  }

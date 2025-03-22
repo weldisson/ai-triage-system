@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/dynamic_conf.yml:/etc/traefik/dynamic_conf.yml:ro
+      - ./traefik/acme.json:/acme.json
+    networks:
+      - web
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - web
+    labels:
+      - "traefik.enable=false"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.wabr.cc`)"
+      - "traefik.http.services.backend.loadbalancer.server.port=3000"
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`wabr.cc`) && PathPrefix(`/ai`)"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  ollama-data:
